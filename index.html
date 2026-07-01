@@ -136,8 +136,11 @@ src="https://www.facebook.com/tr?id=2283088809103948&ev=PageView&noscript=1"
                 redirected = true;
                 if (timerEl) { timerEl.textContent = 'Redirecting...'; timerEl.classList.add('done'); }
                 if (statusEl) { statusEl.textContent = 'Taking you to Telegram'; statusEl.classList.add('ok'); }
-                fireSubscribe();
-                window.location.href = TELEGRAM_LINK;
+                document.querySelector('.vip-btn').addEventListener('click', function() {
+    if (typeof fbq !== 'undefined') {
+        fbq('track', 'Subscribe', { content_name: 'Telegram Join', source: 'button_click' });
+    }
+});
             }
         }
     }, 100);
