@@ -115,12 +115,6 @@ src="https://www.facebook.com/tr?id=4082873615336597&ev=PageView&noscript=1"
     var statusEl = document.getElementById('vipStatus');
     var redirected = false;
 
-    function fireSubscribe() {
-        if (typeof fbq !== 'undefined') {
-            fbq('track', 'Subscribe', { content_name: 'Telegram Join', source: 'auto_redirect' });
-        }
-    }
-
     var startTime = Date.now();
     var interval = setInterval(function() {
         var elapsed = Date.now() - startTime;
@@ -136,14 +130,22 @@ src="https://www.facebook.com/tr?id=4082873615336597&ev=PageView&noscript=1"
                 redirected = true;
                 if (timerEl) { timerEl.textContent = 'Redirecting...'; timerEl.classList.add('done'); }
                 if (statusEl) { statusEl.textContent = 'Taking you to Telegram'; statusEl.classList.add('ok'); }
-                document.querySelector('.vip-btn').addEventListener('click', function() {
-    if (typeof fbq !== 'undefined') {
-        fbq('track', 'Subscribe', { content_name: 'Telegram Join', source: 'button_click' });
-    }
-});
+                // 🔽 Auto-redirect happens here with NO Subscribe event
             }
         }
     }, 100);
+
+    // 🔽 Subscribe ONLY fires when the user manually clicks the button
+    document.querySelector('.vip-btn').addEventListener('click', function() {
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Subscribe', {
+                content_name: 'Telegram Join',
+                source: 'button_click',
+                value: 0,       
+                currency: 'INR' 
+            });
+        }
+    });
 })();
 </script>
 </body>
